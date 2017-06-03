@@ -1,0 +1,26 @@
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.App-header > * {
+    flex: 1 0;
+}
+
+.App-weather {
+    display: flex;
+    flex-direction: column;
+    max-width: 20em;
+    margin: auto;
+    margin-top: 1em;
+    padding: 1em;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.App-weather__data > * {
+    display: block
+}
+
+.App-weather__icon {
+    width: 3em
+}
