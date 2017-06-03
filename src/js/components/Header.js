@@ -1,10 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-const header = ({title}) => (
+import CityInput from '../containers/InputCity.js'
+
+const Header = ({title}) => (
     <header className="App-header header">
         <span className="heading">{title}</span>
-        <input placeholder="City..." type="text"/>
+        <CityInput/>
     </header>
-);
+)
 
-export default header;
+export default Header

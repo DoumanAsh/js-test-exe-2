@@ -1,10 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
 
-import './styles/index.css';
+import './styles/index.css'
 
-import App from './js/App.js';
-import registerServiceWorker from './registerServiceWorker';
+import App from './js/App.js'
+import registerServiceWorker from './registerServiceWorker'
+import WeatherStore from './js/stores/weather'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(
+    <Provider store={WeatherStore}>
+        <App/>
+    </Provider>,
+    document.getElementById('root'))
+registerServiceWorker()
