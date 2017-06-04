@@ -1,3 +1,5 @@
+import {HOUR} from '../../utils/date.js'
+
 export const REQUEST_WEATHER = 1
 export const RECEIVE_WEATHER = 2
 export const RESET_WEATHER = 3
@@ -55,7 +57,7 @@ export const weather_refresher = {
     timer: null,
     start: function(action) {
         if (this.timer !== null) this.stop()
-        this.timer = setInterval(action, 60 * 60 * 1000) //1 hour interval
+        this.timer = setInterval(action, HOUR)
     },
     stop: function() {
         clearInterval(this.timer)

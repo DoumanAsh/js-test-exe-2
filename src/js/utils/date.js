@@ -7,7 +7,15 @@ export const formatter = new Intl.DateTimeFormat(undefined, {
 
 export const now = () => new Date()
 
+export const HOUR = 60 * 60 * 1000 //ms
+
+export function is_hour_passed(date) {
+    return now() - date > HOUR;
+}
+
 export default {
-    formatter: formatter,
-    now: now
+    formatter,
+    is_hour_passed,
+    now,
+    HOUR
 };
