@@ -1,17 +1,25 @@
 import {createStore, applyMiddleware} from 'redux'
 import redux_thunk from 'redux-thunk'
 
+import {weather_refresher, reset_search, fetch_weather} from './actions.js'
 import main_reducer from './reducers.js'
-import {REQUEST_WEATHER, RECEIVE_WEATHER, RESET_WEATHER} from './actions.js'
+import {RECEIVE_WEATHER} from './actions.js'
 
 import * as storage from 'redux-storage'
 import createEngine from 'redux-storage-engine-localstorage'
 const engine = createEngine('__weather-app-redux-store')
-const middleware = storage.createMiddleware(engine, [], [REQUEST_WEATHER, RECEIVE_WEATHER, RESET_WEATHER])
+const middleware = storage.createMiddleware(engine, [], [RECEIVE_WEATHER])
 
 const store = createStore(main_reducer, applyMiddleware(redux_thunk, middleware))
 const load = storage.createLoader(engine)
-load(store)
+load(store).then((state) => {
+    if (state.weather.city_id !== null) {
+        weather_refresher.start(() => store.dispatch(fetch_weather(state.weather.city_id)))
+    }
+    else {
+        store.dispatch(reset_search())
+    }
+})
 
 export default {
     store,

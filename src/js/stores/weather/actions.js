@@ -4,6 +4,7 @@ export const RESET_WEATHER = 3
 export const ENTER_CITY = 4
 export const REQUEST_CITY = 5
 export const UNKNOWN_CITY = 6
+export const RESET_SEARCH = 7
 
 export function request_weather(city_id) {
     return {
@@ -17,6 +18,7 @@ export function receive_weather(city_id, json) {
         type: RECEIVE_WEATHER,
         city_id,
         data: {
+            city_id: city_id,
             city: json.title,
             time: json.time,
             today: json.consolidated_weather[0]
@@ -28,6 +30,7 @@ export function reset_weather() {
     return {
         type: RESET_WEATHER,
         data: {
+            city_id: null,
             city: null,
             time: null,
             today: null
@@ -48,9 +51,22 @@ const fetch_options = {
     mod: 'cors',
 }
 
+export const weather_refresher = {
+    timer: null,
+    start: function(action) {
+        if (this.timer !== null) this.stop()
+        this.timer = setInterval(action, 60 * 60 * 1000) //1 hour interval
+    },
+    stop: function() {
+        clearInterval(this.timer)
+        this.timer = null
+    }
+}
+
 export function fetch_weather(id) {
     return dispatch => {
         dispatch(request_weather(id))
+        weather_refresher.start(() => dispatch(fetch_weather(id)))
         return fetch(cors_proxy_url(`https://www.metaweather.com/api/location/${id}/`), fetch_options)
             .then(resp => resp.json())
             .then(resp => dispatch(receive_weather(id, resp)))
@@ -79,5 +95,12 @@ export function unknown_city(name) {
     return {
         type: UNKNOWN_CITY,
         name
+    }
+}
+
+export function reset_search() {
+    return {
+        type: RESET_SEARCH,
+        name: "Use search box!"
     }
 }
