@@ -9,7 +9,7 @@ import registerServiceWorker from './registerServiceWorker'
 import WeatherStore from './js/stores/weather'
 
 ReactDOM.render(
-    <Provider store={WeatherStore}>
+    <Provider store={WeatherStore.store}>
         <App/>
     </Provider>,
     document.getElementById('root'))

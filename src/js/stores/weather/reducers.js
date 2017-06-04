@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import * as storage from 'redux-storage'
 
 import {REQUEST_WEATHER, RECEIVE_WEATHER, RESET_WEATHER, ENTER_CITY, UNKNOWN_CITY} from './actions.js'
 
@@ -20,7 +21,7 @@ function weather(state={city: null, time: null, today: null}, action) {
     }
 }
 
-export default combineReducers({
+export default storage.reducer(combineReducers({
     city,
     weather
-})
+}))
